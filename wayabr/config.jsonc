@@ -1,1 +1,99 @@
-
+{
+   "layer": "top",
+   "position": "bottom", 
+   "height": 30,
+   "modules-center": ["sway/workspaces","custom/spotify", "tray","custom/notification","network","pulseaudio", "custom/date", "clock"],
+	"sway/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": true,
+    "on-click": "activate",
+		"format": "{icon}",
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "〇",
+      "active": "●",
+      "default": "一"
+      }
+     },
+  "tray": {
+    "icon-size": 13,
+    "spacing": 10
+  },
+  "custom/spotify": {
+    "exec": "/usr/bin/python3 ~/.config/waybar/mediaplayer.py --player spotify",
+    "format": " {}",
+    "return-type": "json",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl previous",
+    "on-scroll-down": "playerctl next"
+    },
+	"custom/date": {
+    "format": "  {}",
+		"interval": 3600,
+		"exec": "~/.config/waybar/waybar-date.sh"
+	},
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": " <span foreground='red'><sup></sup></span>",
+      "none": " ",
+      "dnd-notification": " <span foreground='red'><sup></sup></span>",
+      "dnd-none": " "
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+	"clock": {
+		"format": "  {:%H:%M} ",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+	},
+	"network": {
+        	"format-wifi": "  {essid}",
+        	"format-ethernet": " NoOneDetected",
+        	"format-linked": "{ifname} (No IP) ",
+        	"format-disconnected": "󰤮 Disconnected",
+		"tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}"
+	},
+	"custom/updates": {
+        "interval": 120,
+        "return-type": "string",
+        "exec": "~/.config/waybar/modules/updates.sh",
+        "tooltip": false,
+		"on-click":"setsid -f wezterm start paru -Syyu"
+		//"on-click":"setsid -f foot -e paru -Syyu"
+    },
+    "custom/downloads": {
+        "interval": 600,
+        "return-type": "string",
+        "exec": "~/.config/waybar/modules/downloads.py",
+        "tooltip": false,
+		"on-click":"xdg-open https://github.com/xelphlinux/xelph-iso"
+    },"pulseaudio": {
+		"format": "{icon}  {volume}%",
+        	"format-muted": "ﱝ Muted",
+                "on-click": "pavucontrol",
+                "scroll-step": 5,
+        	"format-icons": {
+            	"headphone": "",
+            	"hands-free": "",
+            	"headset": "",
+            	"phone": "",
+            	"portable": "",
+            	"car": "",
+            	"default": ["", "", ""]
+        }
+    }
+}
